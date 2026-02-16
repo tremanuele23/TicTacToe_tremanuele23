@@ -6,7 +6,7 @@
 
 using namespace std;
 
-char signs[3][3] = {{' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '}};
+char marks[3][3] = {{' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '}};
 
 void color(int x) {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), x);
@@ -25,17 +25,17 @@ void printSpecChar(char C) {
 
 void showBoard() {
     cout<<"       |       |\n";
-    cout<<"   ";  printSpecChar(signs[0][0]);  cout<<"   |   ";  printSpecChar(signs[0][1]);  cout<<"   |   ";  printSpecChar(signs[0][2]);  cout<<"   \n";
+    cout<<"   ";  printSpecChar(marks[0][0]);  cout<<"   |   ";  printSpecChar(marks[0][1]);  cout<<"   |   ";  printSpecChar(marks[0][2]);  cout<<"   \n";
     cout<<"       |       |\n";
     cout<<"-----------------------\n";
 /*------------------------------------------------------------*/
     cout<<"       |       |\n";
-    cout<<"   ";  printSpecChar(signs[1][0]);  cout<<"   |   ";  printSpecChar(signs[1][1]);  cout<<"   |   ";  printSpecChar(signs[1][2]);  cout<<"   \n";
+    cout<<"   ";  printSpecChar(marks[1][0]);  cout<<"   |   ";  printSpecChar(marks[1][1]);  cout<<"   |   ";  printSpecChar(marks[1][2]);  cout<<"   \n";
     cout<<"       |       |\n";
     cout<<"-----------------------\n";
 /*------------------------------------------------------------*/
     cout<<"       |       |\n";
-    cout<<"   ";  printSpecChar(signs[2][0]);  cout<<"   |   ";  printSpecChar(signs[2][1]);  cout<<"   |   ";  printSpecChar(signs[2][2]);  cout<<"   \n";
+    cout<<"   ";  printSpecChar(marks[2][0]);  cout<<"   |   ";  printSpecChar(marks[2][1]);  cout<<"   |   ";  printSpecChar(marks[2][2]);  cout<<"   \n";
     cout<<"       |       |\n";
     cout<<endl<<endl;
 }
@@ -43,7 +43,7 @@ void showBoard() {
 void resetBoard() {
     for(int y = 0; y<3; y++) {
         for(int i = 0; i<3; i++) {
-            signs[y][i] = ' ';
+            marks[y][i] = ' ';
         }
     }
 }
@@ -51,7 +51,7 @@ void resetBoard() {
 bool isThereEmptyCell() {
     for(int i = 0; i<3; i++) {
         for (int j = 0; j<3; j++) {
-            if(signs[i][j]==' ')
+            if(marks[i][j]==' ')
                 {return true;}
         }
     }
@@ -64,7 +64,7 @@ void ShowTitle() {
     cout<< "|\n";
     cout<< "|                                                  |\n";
     cout<< "|                    TIC TAC TOE                   |\n";
-    cout<< "|           -- ma fatto meglio di prima --         |\n";
+    cout<< "|               -- by Tremanuele23 --              |\n";
     cout<< "|                                                  |\n";
     cout<< "|";
     color(6);  cout<< "=================================================="; color(7);
@@ -80,9 +80,9 @@ char checkWinner () {
     };
     char V = 'n',c1, c2, c3;
     for(int i = 0; i<8; i++) {
-        c1 = signs [sV[i][0][0]] [sV[i][0][1]];
-        c2 = signs [sV[i][1][0]] [sV[i][1][1]];
-        c3 = signs [sV[i][2][0]] [sV[i][2][1]];
+        c1 = marks [sV[i][0][0]] [sV[i][0][1]];
+        c2 = marks [sV[i][1][0]] [sV[i][1][1]];
+        c3 = marks [sV[i][2][0]] [sV[i][2][1]];
         if (c1!=' ' && c1 == c2  && c2 == c3)
             V = c1;
     }
@@ -93,13 +93,13 @@ class Player {
 
 private:
 /*----------------------------------------------------------*/
-    char segno;
+    char Mark;
     int X;
     int Y;
 
 public:
 /*----------------------------------------------------------*/
-Player(char P) {segno=P;}
+Player(char P) {Mark=P;}
 
 bool cordsAreOK() {
     if (X<0||X>2||Y<0||Y>2)
@@ -107,31 +107,31 @@ bool cordsAreOK() {
     else {return true;}
 }
 
-void scegliCella() {
+void chooseCell() {
     char comma;
-    cout<<"Contrassegna posizione (riga, colonna).\n";
+    cout<<"Mark your position (row, column).\n";
     do {
-        cout<<"La tua mossa: ";
+        cout<<"Your move: ";
         cin>> X >> comma >> Y;
         if (!cordsAreOK())
-            cout<<"Mossa non valida. Riprovare\n\n";
+            cout<<"Not valid move. Try again\n\n";
     }
     while(!cordsAreOK());
 }
 
 void exeTurn() {
-    cout<<"Turno di ";
-    printSpecChar(segno);
-    cout<<".\n";
+    cout<<"Player ";
+    printSpecChar(Mark);
+    cout<<"'s turn.\n";
     do {
-        scegliCella();
-        if (signs[X][Y] == ' ') {
-            signs[X][Y] = segno;
+        chooseCell();
+        if (marks[X][Y] == ' ') {
+            marks[X][Y] = Mark;
             break;
         }
-        else  {cout<<"--Cella occupata--\n";}
+        else  {cout<<"--That cell was already filled--\n";}
     }
-    while(signs[X][Y]!=' ');
+    while(marks[X][Y]!=' ');
 }
 };
 
@@ -146,7 +146,7 @@ int main()
 
 /*----Start Page-----*/
     ShowTitle();
-    cout<<"Premere un tasto per giocare: ";
+    cout<<"Press any key to start playing: ";
     _getch();
 
 /*-------Game-------*/
@@ -163,13 +163,13 @@ int main()
         system("CLS");
         showBoard();
         if(V=='n')
-            cout<<"\nPareggio! Facit schif!";
+            cout<<"\nTie! What a delusion!";
         else {
-            cout<<"\nIl giocatore ";
+            cout<<"\nPlayer ";
             printSpecChar(V);
-            cout<<" vince!";
+            cout<<" wins!";
         }
-        cout<<"\n\nI lorsignori disiano giocare ancora (1 Si 0 No)? ";
+        cout<<"\n\nDo you wish to play another match (1 Yes 0 No)? ";
         cin>>playAgain;
     }
     while(playAgain);
